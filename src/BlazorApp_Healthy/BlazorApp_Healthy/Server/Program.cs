@@ -1,3 +1,7 @@
+global using Microsoft.EntityFrameworkCore;
+
+using BlazorApp_Healthy.Server.Data;
+
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HealthyConnection")));
 
 var app = builder.Build();
 
