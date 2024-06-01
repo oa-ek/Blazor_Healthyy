@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace BlazorApp_Healthy.Shared
 {
-    internal class Category
+    public class Category : IEntity<Guid>
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string TitleCategory { get; set; }
+
+
+
+        public virtual ICollection<Recipe> Recipes { get; set; } = new HashSet<Recipe>();
     }
 }
