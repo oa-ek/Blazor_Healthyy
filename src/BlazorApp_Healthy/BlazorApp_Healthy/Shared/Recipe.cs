@@ -15,16 +15,7 @@ namespace BlazorApp_Healthy.Shared
         public string? Description { get; set; } = string.Empty;
         public string? Instructons { get; set; } = string.Empty;
         public string? ImagePath { get; set; } = "/img/recipes/no_photo.jpg";
-        public User? Author { get; set; }
-
-        [ForeignKey(nameof(Author))]
-        public Guid? AuthorId { get; set; }
-
-
-        public User? Client { get; set; }
-
-        [ForeignKey(nameof(Client))]
-        public Guid? ClientId { get; set; }
+     
 
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
