@@ -1,0 +1,62 @@
+﻿@page "/categories/edit/{categoryId:guid}"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<h3>Edit Category</h3>
+
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+else if (hasError)
+{
+    <p>Error loading category. Please try again.</p>
+}
+else if (Category != null)
+{
+    <form @onsubmit="HandleValidSubmit">
+        <div class="mb-3">
+            <label for="titleCategory" class="form-label">Title</label>
+            <InputText id="titleCategory" class="form-control" @bind-Value="Category.TitleCategory" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+}
+
+@code {
+    [Parameter]
+    public Guid categoryId { get; set; }
+
+    private BlazorApp_Healthy.Shared.Category Category;
+    private bool isLoading = true;
+    private bool hasError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Category = await HttpClient.GetFromJsonAsync<BlazorApp_Healthy.Shared.Category>($"category/{categoryId}");
+        }
+        catch (Exception)
+        {
+            hasError = true;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var response = await HttpClient.PutAsJsonAsync($"category/{Category.Id}", Category);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/category");
+        }
+        else
+        {
+            // Handle error
+        }
+    }
+}

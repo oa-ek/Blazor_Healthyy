@@ -34,5 +34,38 @@ namespace BlazorApp_Healthy.Server.Controllers
             var createdCategory = await _categoryService.AddCategoryAsync(category);
             return CreatedAtAction(nameof(GetAllCategories), new { id = createdCategory.Id }, createdCategory);
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCategory(Guid id)
+        {
+            var categoryToDelete = await _categoryService.GetCategoryByIdAsync(id);
+            if (categoryToDelete == null)
+            {
+                return NotFound();
+            }
+
+            await _categoryService.DeleteCategoryAsync(categoryToDelete);
+            return NoContent();
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Category>> UpdateCategory(Guid id, Category category)
+        {
+            if (id != category.Id)
+            {
+                return BadRequest();
+            }
+
+            var updatedCategory = await _categoryService.UpdateCategoryAsync(category);
+            return Ok(updatedCategory);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Category>> GetCategoryById(Guid id)
+        {
+            var category = await _categoryService.GetCategoryByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
+        }
     }
 }
