@@ -88,9 +88,7 @@ namespace BlazorApp_Healthy.Server.Controllers
 
         private bool CategoryExists(Guid id)
         {
-            // Check if category exists in your repository
-            // Implement this according to your repository logic
-            throw new NotImplementedException();
+            return _categoryRepository.GetAsync(id) != null;
         }
     }
 }

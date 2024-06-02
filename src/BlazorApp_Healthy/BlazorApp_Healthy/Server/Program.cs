@@ -13,6 +13,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HealthyConnection")));
 builder.Services.AddScoped<IngredientService>();
+builder.Services.AddScoped<RecipeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
