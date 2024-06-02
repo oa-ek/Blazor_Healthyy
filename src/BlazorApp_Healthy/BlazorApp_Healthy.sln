@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp_Healthy.Server", "BlazorApp_Healthy\Server\BlazorApp_Healthy.Server.csproj", "{1EF23FBE-DE0F-4DA0-A98D-C86CD0BB2A8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp_Healthy.Server", "BlazorApp_Healthy\Server\BlazorApp_Healthy.Server.csproj", "{1EF23FBE-DE0F-4DA0-A98D-C86CD0BB2A8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp_Healthy.Client", "BlazorApp_Healthy\Client\BlazorApp_Healthy.Client.csproj", "{91897F01-DDC4-4131-AD73-E96787DAB7FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp_Healthy.Client", "BlazorApp_Healthy\Client\BlazorApp_Healthy.Client.csproj", "{91897F01-DDC4-4131-AD73-E96787DAB7FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp_Healthy.Shared", "BlazorApp_Healthy\Shared\BlazorApp_Healthy.Shared.csproj", "{51ABC446-63F5-447D-B161-1DF1BD7A5489}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp_Healthy.Shared", "BlazorApp_Healthy\Shared\BlazorApp_Healthy.Shared.csproj", "{51ABC446-63F5-447D-B161-1DF1BD7A5489}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

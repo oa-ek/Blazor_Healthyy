@@ -1,7 +1,30 @@
 ﻿@page "/ingredient"
-<PageTitle>Ingredient</PageTitle>
+@inject HttpClient HttpClient
+
+@using BlazorApp_Healthy.Shared
 <h3>Ingredient</h3>
 
-@code {
+@if (Ingredients != null)
+{
+    <ul>
+        @foreach (var ingredient in Ingredients)
+        {
+            <li>
+                <strong>@ingredient.Title</strong>: @ingredient.Quantity @ingredient.Unit
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Loading...</p>
+}
 
+@code {
+    private List<BlazorApp_Healthy.Shared.Ingredient> Ingredients;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Ingredients = await HttpClient.GetFromJsonAsync<List<BlazorApp_Healthy.Shared.Ingredient>>("Ingredient");
+    }
 }
