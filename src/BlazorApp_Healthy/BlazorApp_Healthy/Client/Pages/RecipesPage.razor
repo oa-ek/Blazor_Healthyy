@@ -5,28 +5,32 @@
 
 
 <h3>Recipes</h3>
-
-@if (recipeList != null)
-{
-    <ul>
-        @foreach (var recipe in recipeList)
-        {
-            <li>
-                <strong>@recipe.Name</strong>: @recipe.Description
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <p>Loading...</p>
-}
+<a href="/recipes/create" class="btn btn-primary float-end">Add a Recipe</a>
+<div class="row">
+    @foreach (var recipe in Recipes)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="@recipe.ImagePath" alt="@recipe.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@recipe.Name</h5>
+                    <p class="card-text">@recipe.Description</p>
+                    <div class="btn-group" role="group">
+                        <a href="/recipes/details/@recipe.Id" class="btn btn-outline-primary">Details</a>
+                        <a href="/recipes/edit/@recipe.Id" class="btn btn-outline-primary">Edit</a>
+                        <a href="/Recipes/Delete/@recipe.Id" class="btn btn-outline-primary">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
-    private List<Recipe> recipeList;
+    private List<Recipe> Recipes;
 
     protected override async Task OnInitializedAsync()
     {
-        recipeList = await HttpClient.GetFromJsonAsync<List<Recipe>>("Recipe");
+        Recipes = await HttpClient.GetFromJsonAsync<List<Recipe>>("Recipe");
     }
 }
