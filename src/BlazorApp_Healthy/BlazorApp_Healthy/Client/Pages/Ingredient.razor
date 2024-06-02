@@ -1,7 +1,8 @@
 ﻿@page "/ingredient"
-@inject HttpClient HttpClient
-
 @using BlazorApp_Healthy.Shared
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
 <h3>Ingredient</h3>
 <a href="/ingredients/create" class="btn btn-primary float-end">Додати категорію</a>
 
@@ -23,7 +24,6 @@
                     <td>@ingredient.Quantity</td>
                     <td>@ingredient.Unit</td>
                     <td>
-
                         <a href="/Ingredients/Edit/@ingredient.Id" class="btn btn-outline-primary">Редагувати</a>
                         <a href="/Ingredients/Delete/@ingredient.Id" class="btn btn-outline-primary">Видалити</a>
                     </td>
