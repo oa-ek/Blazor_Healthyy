@@ -1,11 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
+
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BlazorApp_Healthy.Server.Services;
+using BlazorApp_Healthy.Shared;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorApp_Healthy.Server.Controllers
 {
-    [Route("api/[controller]")]
+
+
     [ApiController]
+    [Route("[controller]")]
     public class CategoryController : ControllerBase
     {
+        private readonly CategoryService _categoryService;
+
+        public CategoryController(CategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<Category>>> GetAllCategories()
+        {
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            return Ok(categories);
+        }
+
+
     }
 }

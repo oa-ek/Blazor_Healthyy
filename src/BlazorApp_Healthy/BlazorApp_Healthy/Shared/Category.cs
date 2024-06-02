@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BlazorApp_Healthy.Shared
 {
     public class Category : IEntity<Guid>
