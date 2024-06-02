@@ -2,17 +2,32 @@
 @inject HttpClient HttpClient
 
 <h3>Category</h3>
+<a href="/categories/create" class="btn btn-primary float-end">Add a Category</a>
 
 @if (Categories != null)
 {
-    <ul>
-        @foreach (var category in Categories)
-        {
-            <li>
-                <strong>@category.TitleCategory</strong>
-            </li>
-        }
-    </ul>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Categories)
+            {
+                <tr>
+                    <td>@category.TitleCategory</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="/categories/edit/@category.Id" class="btn btn-outline-primary">Edit</a>
+                            <a href="/categories/delete/@category.Id" class="btn btn-outline-primary">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {

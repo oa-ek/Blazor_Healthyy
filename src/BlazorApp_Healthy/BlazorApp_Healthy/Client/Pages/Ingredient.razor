@@ -3,17 +3,34 @@
 
 @using BlazorApp_Healthy.Shared
 <h3>Ingredient</h3>
+<a href="/Category/Create" class="btn btn-primary float-end">Додати категорію</a>
 
 @if (Ingredients != null)
 {
-    <ul>
-        @foreach (var ingredient in Ingredients)
-        {
-            <li>
-                <strong>@ingredient.Title</strong>: @ingredient.Quantity @ingredient.Unit
-            </li>
-        }
-    </ul>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ingredient in Ingredients)
+            {
+                <tr>
+                    <td>@ingredient.Title</td>
+                    <td>@ingredient.Quantity</td>
+                    <td>@ingredient.Unit</td>
+                    <td>
+
+                        <a href="/Ingredients/Edit/@ingredient.Id" class="btn btn-outline-primary">Редагувати</a>
+                        <a href="/Ingredients/Delete/@ingredient.Id" class="btn btn-outline-primary">Видалити</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
@@ -25,6 +42,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Ingredients = await HttpClient.GetFromJsonAsync<List<BlazorApp_Healthy.Shared.Ingredient>>("Ingredient");
+        Ingredients = await HttpClient.GetFromJsonAsync<List<BlazorApp_Healthy.Shared.Ingredient>>("ingredient");
     }
 }
