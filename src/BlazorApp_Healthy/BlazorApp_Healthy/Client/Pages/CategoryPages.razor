@@ -1,54 +1,29 @@
-﻿@using BlazorApp_Healthy.Client.Services.Comon
-@using BlazorApp_Healthy.Shared
+﻿@page "/category"
+@inject HttpClient HttpClient
 
-@page "/categories"
-@inject IRepository<Category, Guid> CategoryRepository
+<h3>Category</h3>
 
-<PageTitle>Categories</PageTitle>
-
-<h2>Categories</h2>
-
-<a class="btn btn-success" href="/categories/create">Add Category</a>
-
-@if (categories == null)
+@if (Categories != null)
 {
-    <p><em>Loading...</em></p>
+    <ul>
+        @foreach (var category in Categories)
+        {
+            <li>
+                <strong>@category.TitleCategory</strong>
+            </li>
+        }
+    </ul>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var category in categories)
-            {
-                <tr>
-                    <td>@category.TitleCategory</td>   
-                    <td>
-                        <a href="/categories/edit/@category.Id" class="btn btn-warning">Edit</a>
-                        <button @onclick="() => DeleteCategory(category.Id)" class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <p>Loading...</p>
 }
 
 @code {
-    private List<Category> categories;
+    private List<BlazorApp_Healthy.Shared.Category> Categories;
 
     protected override async Task OnInitializedAsync()
     {
-        categories = (await CategoryRepository.GetAllAsync()).ToList();
-    }
-
-    private async Task DeleteCategory(Guid id)
-    {
-        await CategoryRepository.DeleteAsync(id);
-        categories = (await CategoryRepository.GetAllAsync()).ToList();
+        Categories = await HttpClient.GetFromJsonAsync<List<BlazorApp_Healthy.Shared.Category>>("category");
     }
 }
