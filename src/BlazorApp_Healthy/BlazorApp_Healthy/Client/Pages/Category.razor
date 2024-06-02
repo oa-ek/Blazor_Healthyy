@@ -1,0 +1,29 @@
+﻿@page "/category"
+@inject HttpClient HttpClient
+
+<h3>Category</h3>
+
+@if (Categories != null)
+{
+    <ul>
+        @foreach (var category in Categories)
+        {
+            <li>
+                <strong>@category.TitleCategory</strong>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private List<BlazorApp_Healthy.Shared.Category> Categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Categories = await HttpClient.GetFromJsonAsync<List<BlazorApp_Healthy.Shared.Category>>("category");
+    }
+}
