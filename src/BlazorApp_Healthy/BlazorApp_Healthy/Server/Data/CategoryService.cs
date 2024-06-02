@@ -26,5 +26,6 @@ namespace BlazorApp_Healthy.Server.Services
             await _context.SaveChangesAsync();
             return category;
         }
+
     }
 }

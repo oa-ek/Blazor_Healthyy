@@ -28,6 +28,11 @@ namespace BlazorApp_Healthy.Server.Controllers
             return Ok(categories);
         }
 
-
+        [HttpPost]
+        public async Task<ActionResult<Category>> CreateCategory(Category category)
+        {
+            var createdCategory = await _categoryService.AddCategoryAsync(category);
+            return CreatedAtAction(nameof(GetAllCategories), new { id = createdCategory.Id }, createdCategory);
+        }
     }
 }
