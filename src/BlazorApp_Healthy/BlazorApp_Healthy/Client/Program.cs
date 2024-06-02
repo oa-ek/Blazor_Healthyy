@@ -1,6 +1,7 @@
 using BlazorApp_Healthy.Client;
 using BlazorApp_Healthy.Client.Services.Comon;
 using BlazorApp_Healthy.Client.Services.DataService;
+using BlazorApp_Healthy.Client.Services.Recipes;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -13,5 +14,8 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 // Register IDataService and Repository
 builder.Services.AddScoped<IDataService, HttpDataService>();
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+
+
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 
 await builder.Build().RunAsync();

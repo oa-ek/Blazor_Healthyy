@@ -1,0 +1,32 @@
+﻿@page "/recipes"
+@using BlazorApp_Healthy.Client.Services.Recipes
+@using BlazorApp_Healthy.Shared
+@inject HttpClient HttpClient
+
+
+<h3>Recipes</h3>
+
+@if (recipeList != null)
+{
+    <ul>
+        @foreach (var recipe in recipeList)
+        {
+            <li>
+                <strong>@recipe.Name</strong>: @recipe.Description
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private List<Recipe> recipeList;
+
+    protected override async Task OnInitializedAsync()
+    {
+        recipeList = await HttpClient.GetFromJsonAsync<List<Recipe>>("Recipe");
+    }
+}

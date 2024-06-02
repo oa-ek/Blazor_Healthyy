@@ -24,11 +24,5 @@ namespace BlazorApp_Healthy.Server.Controllers
             return Ok(categories);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Category>> AddCategory(Category category)
-        {
-            var newCategory = await _categoryService.AddCategoryAsync(category);
-            return CreatedAtAction(nameof(GetAllCategories), new { id = newCategory.Id }, newCategory);
-        }
     }
 }
