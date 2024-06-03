@@ -22,5 +22,21 @@ namespace BlazorApp_Healthy.Server.Data
             await _context.SaveChangesAsync();
             return recipe;
         }
+
+
+        public async Task<Recipe> DeleteRecipeAsync(Guid id)
+        {
+            var recipeToDelete = await _context.Recipes.FindAsync(id);
+            if (recipeToDelete != null)
+            {
+                _context.Recipes.Remove(recipeToDelete);
+                await _context.SaveChangesAsync();
+            }
+            return recipeToDelete;
+        }
+        public async Task<List<Ingredient>> GetAllIngredientsAsync()
+        {
+            return await _context.Ingredients.ToListAsync();
+        }
     }
 }

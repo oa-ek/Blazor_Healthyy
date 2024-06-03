@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using BlazorApp_Healthy.Server.Data;
+using Microsoft.EntityFrameworkCore;
+using BlazorApp_Healthy.Server.Services;
 
 namespace BlazorApp_Healthy.Server.Controllers
 {
@@ -14,6 +16,7 @@ namespace BlazorApp_Healthy.Server.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly RecipeService _recipeService;
+
 
         public RecipeController(RecipeService recipeService)
         {
@@ -27,12 +30,26 @@ namespace BlazorApp_Healthy.Server.Controllers
             return Ok(recipes);
         }
 
+
         [HttpPost]
         public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
         {
             var newRecipe = await _recipeService.AddRecipeAsync(recipe);
             return CreatedAtAction(nameof(GetAllRecipes), new { id = newRecipe.Id }, newRecipe);
         }
-    }
 
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRecipe(Guid id)
+        {
+            // Call the service method to delete the recipe
+            var recipeToDelete = await _recipeService.DeleteRecipeAsync(id);
+            if (recipeToDelete == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+       
+    }
 }
