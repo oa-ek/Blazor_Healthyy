@@ -27,12 +27,36 @@ namespace BlazorApp_Healthy.Server.Controllers
             return Ok(recipes);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Recipe>> GetRecipeById(Guid id)
+        {
+            var recipe = await _recipeService.GetRecipeByIdAsync(id);
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+            return Ok(recipe);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
         {
             var newRecipe = await _recipeService.AddRecipeAsync(recipe);
             return CreatedAtAction(nameof(GetAllRecipes), new { id = newRecipe.Id }, newRecipe);
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Recipe>> UpdateRecipe(Guid id, Recipe recipe)
+        {
+            if (id != recipe.Id)
+            {
+                return BadRequest();
+            }
+
+            var updatedRecipe = await _recipeService.UpdateRecipeAsync(recipe);
+            return Ok(updatedRecipe);
+        }
+
     }
 
 }
