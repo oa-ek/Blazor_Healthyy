@@ -2,6 +2,7 @@
 @using BlazorApp_Healthy.Shared
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <h3>Ingredient</h3>
 <a href="/ingredients/create" class="btn btn-primary float-end">Додати категорію</a>
@@ -24,8 +25,11 @@
                     <td>@ingredient.Quantity</td>
                     <td>@ingredient.Unit</td>
                     <td>
-                        <a href="/Ingredients/Edit/@ingredient.Id" class="btn btn-outline-primary">Редагувати</a>
-                        <a href="/Ingredients/Delete/@ingredient.Id" class="btn btn-outline-primary">Видалити</a>
+                        
+                        <a href="/ingredients/edit/@ingredient.Id" class="btn btn-outline-primary">Редагувати</a>
+
+                        <button type="button" class="btn btn-outline-primary" @onclick="(() => DeleteIngredient(ingredient.Id, ingredient.Title))">Видалити</button>
+
                     </td>
                 </tr>
             }
@@ -42,6 +46,31 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadIngredients();
+    }
+
+    private async Task LoadIngredients()
+    {
         Ingredients = await HttpClient.GetFromJsonAsync<List<BlazorApp_Healthy.Shared.Ingredient>>("ingredient");
     }
+
+    private async Task DeleteIngredient(Guid id, string title)
+    {
+        var confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {title}?");
+
+        if (confirmDelete)
+        {
+            var response = await HttpClient.DeleteAsync($"ingredient/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadIngredients();
+            }
+            else
+            {
+                // Handle error
+            }
+        }
+    }
 }
+
+
