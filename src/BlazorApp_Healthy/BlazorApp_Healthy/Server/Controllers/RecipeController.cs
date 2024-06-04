@@ -60,8 +60,6 @@ namespace BlazorApp_Healthy.Server.Controllers
             }
             return NoContent();
         }
-       
-
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Recipe>> UpdateRecipe(Guid id, Recipe recipe)

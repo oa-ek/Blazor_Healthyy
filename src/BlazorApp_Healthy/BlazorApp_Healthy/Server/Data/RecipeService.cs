@@ -18,11 +18,9 @@ namespace BlazorApp_Healthy.Server.Data
 
         public async Task<Recipe> GetRecipeByIdAsync(Guid id)
         {
-
             return await _context.Recipes.FindAsync(id);
         }
 
- 
         public async Task<Recipe> AddRecipeAsync(Recipe recipe)
         {
             _context.Recipes.Add(recipe);
@@ -39,7 +37,6 @@ namespace BlazorApp_Healthy.Server.Data
             return recipe;
         }
 
-
         public async Task<Recipe> DeleteRecipeAsync(Guid id)
         {
             var recipeToDelete = await _context.Recipes.FindAsync(id);
@@ -51,10 +48,7 @@ namespace BlazorApp_Healthy.Server.Data
             return recipeToDelete;
         }
 
-        public async Task<List<Ingredient>> GetAllIngredientsAsync()
-        {
-            return await _context.Ingredients.ToListAsync();
-        }
+        
 
     }
 }
