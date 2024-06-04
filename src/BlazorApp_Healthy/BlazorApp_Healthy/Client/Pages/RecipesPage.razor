@@ -19,7 +19,7 @@
                     <p class="card-text">@recipe.Description</p>
                     <div class="btn-group" role="group">
                         <a href="/recipes/details/@recipe.Id" class="btn btn-outline-primary">Details</a>
-                        <a href="/recipes/edit/@recipe.Id" class="btn btn-outline-primary">Edit</a>
+                            <a href="/recipes/edit/@recipe.Id" class="btn btn-outline-primary">Edit</a>
                         <button @onclick="() => DeleteRecipe(recipe.Id)" class="btn btn-outline-primary">Delete</button>
                     </div>
                 </div>

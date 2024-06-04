@@ -19,10 +19,7 @@ namespace BlazorApp_Healthy.Server.Data
         public async Task<Recipe> GetRecipeByIdAsync(Guid id)
         {
 
-            return await _context.Recipes
-                .Include(r => r.Categories)
-                .Include(r => r.Ingredients)
-                .FirstOrDefaultAsync(r => r.Id == id);
+            return await _context.Recipes.FindAsync(id);
         }
 
  
