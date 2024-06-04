@@ -12,6 +12,6 @@ namespace BlazorApp_Healthy.Shared
         public string Title { get; set; }
         public float Quantity { get; set; }
         public string Unit { get; set; }
-        public virtual ICollection<Recipe> Recipes { get; set; } = new HashSet<Recipe>();
+       public virtual ICollection<Recipe> Recipes { get; set; } = new HashSet<Recipe>();
     }
 }
