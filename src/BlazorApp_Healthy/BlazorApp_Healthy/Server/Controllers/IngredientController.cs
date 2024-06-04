@@ -30,5 +30,40 @@ namespace BlazorApp_Healthy.Server.Controllers
             return CreatedAtAction(nameof(GetAllIngredients), new { id = newIngredient.Id }, newIngredient);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteIngredient(Guid id)
+        {
+            var ingredientToDelete = await _ingredientService.GetIngredientByIdAsync(id);
+            if (ingredientToDelete == null)
+            {
+                return NotFound();
+            }
+
+            await _ingredientService.DeleteIngredientAsync(ingredientToDelete);
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Ingredient>> GetIngredientById(Guid id)
+        {
+            var ingredient = await _ingredientService.GetIngredientByIdAsync(id);
+            if (ingredient == null)
+            {
+                return NotFound();
+            }
+            return Ok(ingredient);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Ingredient>> UpdateIngredient(Guid id, Ingredient ingredient)
+        {
+            if (id != ingredient.Id)
+            {
+                return BadRequest();
+            }
+
+            var updatedIngredient = await _ingredientService.UpdateIngredientAsync(ingredient);
+            return Ok(updatedIngredient);
+        }
     }
 }

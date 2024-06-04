@@ -1,11 +1,10 @@
-﻿using BlazorApp_Healthy.Shared;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using BlazorApp_Healthy.Client.Services.Comon;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using System.Threading.Tasks;
 using BlazorApp_Healthy.Server.Data;
+using BlazorApp_Healthy.Server.Services;
+using BlazorApp_Healthy.Shared;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorApp_Healthy.Server.Controllers
 {
@@ -40,10 +39,23 @@ namespace BlazorApp_Healthy.Server.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
+        public async Task<ActionResult<Recipe>> CreateRecipe(Recipe recipe)
         {
-            var newRecipe = await _recipeService.AddRecipeAsync(recipe);
-            return CreatedAtAction(nameof(GetAllRecipes), new { id = newRecipe.Id }, newRecipe);
+            var createdRecipe = await _recipeService.AddRecipeAsync(recipe);
+            return CreatedAtAction(nameof(GetAllRecipes), new { id = createdRecipe.Id }, createdRecipe);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteRecipe(Guid id)
+        {
+            var recipeToDelete = await _recipeService.GetRecipeByIdAsync(id);
+            if (recipeToDelete == null)
+            {
+                return NotFound();
+            }
+
+            await _recipeService.DeleteRecipeAsync(recipeToDelete);
+            return NoContent();
         }
 
         [HttpPut("{id}")]
@@ -59,5 +71,4 @@ namespace BlazorApp_Healthy.Server.Controllers
         }
 
     }
-
 }

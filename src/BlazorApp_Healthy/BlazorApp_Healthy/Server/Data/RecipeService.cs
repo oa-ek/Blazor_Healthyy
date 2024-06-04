@@ -18,17 +18,21 @@ namespace BlazorApp_Healthy.Server.Data
 
         public async Task<Recipe> GetRecipeByIdAsync(Guid id)
         {
+
             return await _context.Recipes
                 .Include(r => r.Categories)
                 .Include(r => r.Ingredients)
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
+
+ 
         public async Task<Recipe> AddRecipeAsync(Recipe recipe)
         {
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
             return recipe;
         }
+
 
         public async Task<Recipe> UpdateRecipeAsync(Recipe recipe)
         {
@@ -37,5 +41,8 @@ namespace BlazorApp_Healthy.Server.Data
             return recipe;
         }
 
+
+
+        
     }
 }
