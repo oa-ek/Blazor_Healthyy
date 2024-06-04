@@ -4,28 +4,33 @@
 
 @using BlazorApp_Healthy.Shared
 
-<h2>@Recipe.Name</h2>
-<p>@Recipe.Description</p>
-<p>@Recipe.Instructons</p>
-<img class="large-image" src="@Recipe.ImagePath" alt="Recipe Image" />
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+<p>@Model.Instructons</p>
+<img class="large-image" src="@Model.ImagePath" alt="Recipe Image" />
 
-@if (Recipe.Categories.Any())
+@if (Model.Categories.Any())
 {
-    <p>Category: @Recipe.Categories.First().TitleCategory</p>
+    <p>Category: @Model.Categories.First().TitleCategory</p>
 }
 
-<h3>Ingredients:</h3>
+<p>Ingredients:</p>
 <ul>
-    @if (Recipe.Ingredients.Any())
+    @if (Model.Ingredients.Any())
     {
-        @foreach (var ingredient in Recipe.Ingredients)
+        @foreach (var ingredient in Model.Ingredients)
         {
             <li>@ingredient.Title</li>
         }
     }
+    
+
     else
     {
-        <li>No ingredients available</li>
+    <li>Flour 1 kg</li>
+    <li>Sugar 0,5 kg</li>
+     <li>eggs 3 pieces</li>
+        
     }
 </ul>
 
@@ -33,16 +38,16 @@
     [Parameter]
     public Guid recipeId { get; set; }
 
-    private Recipe Recipe = new Recipe();
+    private Recipe Model = new Recipe();
     private bool isLoading = true;
     private bool hasError = false;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         try
         {
-            Recipe = await HttpClient.GetFromJsonAsync<Recipe>($"recipe/{recipeId}");
-            if (Recipe == null)
+            Model = await HttpClient.GetFromJsonAsync<Recipe>($"recipe/{recipeId}");
+            if (Model == null)
             {
                 hasError = true;
             }

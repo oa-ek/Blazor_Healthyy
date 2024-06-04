@@ -38,6 +38,7 @@ namespace BlazorApp_Healthy.Server.Controllers
             return Ok(recipe);
         }
 
+
         [HttpPost]
         public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
         {
