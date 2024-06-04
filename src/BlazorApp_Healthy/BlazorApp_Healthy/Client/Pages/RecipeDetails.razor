@@ -1,0 +1,65 @@
+﻿@page "/recipes/details/{recipeId:guid}"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+@using BlazorApp_Healthy.Shared
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+<p>@Model.Instructons</p>
+<img class="large-image" src="@Model.ImagePath" alt="Recipe Image" />
+
+@if (Model.Categories.Any())
+{
+    <p>Category: @Model.Categories.First().TitleCategory</p>
+}
+
+<p>Ingredients:</p>
+<ul>
+    @if (Model.Ingredients.Any())
+    {
+        @foreach (var ingredient in Model.Ingredients)
+        {
+            <li>@ingredient.Title</li>
+        }
+    }
+    
+
+    else
+    {
+    <li>Flour 1 kg</li>
+    <li>Sugar 0,5 kg</li>
+     <li>eggs 3 pieces</li>
+        
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public Guid recipeId { get; set; }
+
+    private Recipe Model = new Recipe();
+    private bool isLoading = true;
+    private bool hasError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Model = await HttpClient.GetFromJsonAsync<Recipe>($"recipe/{recipeId}");
+            if (Model == null)
+            {
+                hasError = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading recipe: {ex.Message}");
+            hasError = true;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

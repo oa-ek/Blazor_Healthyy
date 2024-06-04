@@ -16,9 +16,28 @@ namespace BlazorApp_Healthy.Server.Data
             return await _context.Recipes.ToListAsync();
         }
 
+        public async Task<Recipe> GetRecipeByIdAsync(Guid id)
+        {
+
+            return await _context.Recipes
+                .Include(r => r.Categories)
+                .Include(r => r.Ingredients)
+                .FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+ 
         public async Task<Recipe> AddRecipeAsync(Recipe recipe)
         {
             _context.Recipes.Add(recipe);
+            await _context.SaveChangesAsync();
+            return recipe;
+        }
+
+
+
+        public async Task<Recipe> UpdateRecipeAsync(Recipe recipe)
+        {
+            _context.Entry(recipe).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return recipe;
         }
@@ -34,9 +53,11 @@ namespace BlazorApp_Healthy.Server.Data
             }
             return recipeToDelete;
         }
+
         public async Task<List<Ingredient>> GetAllIngredientsAsync()
         {
             return await _context.Ingredients.ToListAsync();
         }
+
     }
 }

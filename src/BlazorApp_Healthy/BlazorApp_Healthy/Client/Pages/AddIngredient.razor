@@ -1,2 +1,45 @@
-﻿<button class="btn btn-primary">Save</button>
+﻿@page "/ingredients/create"
+@using BlazorApp_Healthy.Shared
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
 
+<h3>Create Ingredient</h3>
+
+<EditForm Model="newIngredient" OnValidSubmit="CreateIngredient">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <InputText id="title" class="form-control" @bind-Value="newIngredient.Title" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <InputNumber id="quantity" class="form-control" @bind-Value="newIngredient.Quantity" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="unit" class="form-label">Unit</label>
+        <InputText id="unit" class="form-control" @bind-Value="newIngredient.Unit" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Ingredient</button>
+</EditForm>
+
+@code {
+    private BlazorApp_Healthy.Shared.Ingredient newIngredient = new BlazorApp_Healthy.Shared.Ingredient();
+
+    private async Task CreateIngredient()
+    {
+        var response = await HttpClient.PostAsJsonAsync("ingredient", newIngredient);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/ingredient");
+        }
+        else
+        {
+            Console.WriteLine("Error adding ingredient");
+        }
+    }
+}
