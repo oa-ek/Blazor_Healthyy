@@ -46,15 +46,14 @@ namespace BlazorApp_Healthy.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteRecipe(Guid id)
+        public async Task<IActionResult> DeleteRecipe(Guid id)
         {
-            var recipeToDelete = await _recipeService.GetRecipeByIdAsync(id);
+            // Call the service method to delete the recipe
+            var recipeToDelete = await _recipeService.DeleteRecipeAsync(id);
             if (recipeToDelete == null)
             {
                 return NotFound();
             }
-
-            await _recipeService.DeleteRecipeAsync(recipeToDelete);
             return NoContent();
         }
 
