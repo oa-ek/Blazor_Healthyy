@@ -5,7 +5,7 @@
 @inject IJSRuntime JSRuntime
 
 <h3>Ingredient</h3>
-<a href="/ingredients/create" class="btn btn-primary float-end">Додати категорію</a>
+<a href="/ingredients/create" class="btn btn-primary float-end">Add ingredient</a>
 
 @if (Ingredients != null)
 {
@@ -25,10 +25,10 @@
                     <td>@ingredient.Quantity</td>
                     <td>@ingredient.Unit</td>
                     <td>
-                        
-                        <a href="/ingredients/edit/@ingredient.Id" class="btn btn-outline-primary">Редагувати</a>
 
-                        <button type="button" class="btn btn-outline-primary" @onclick="(() => DeleteIngredient(ingredient.Id, ingredient.Title))">Видалити</button>
+                        <a href="/ingredients/edit/@ingredient.Id" class="btn btn-outline-primary">Edit</a>
+
+                        <button type="button" class="btn btn-outline-primary" @onclick="(() => DeleteIngredient(ingredient.Id, ingredient.Title))">Delete</button>
 
                     </td>
                 </tr>
